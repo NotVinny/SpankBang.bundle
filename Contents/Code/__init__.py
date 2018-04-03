@@ -10,7 +10,7 @@ from DumbTools import DumbKeyboard
 
 TITLE = 'SpankBang'
 PREFIX = '/video/spankbang'
-BASE_URL = 'http://spankbang.com'
+BASE_URL = 'https://spankbang.com'
 
 ICON = 'icon-default.png'
 ICON_BM = 'icon-bookmarks.png'
