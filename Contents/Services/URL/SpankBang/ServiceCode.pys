@@ -84,17 +84,10 @@ def PlayVideo(url, fmt, **kwargs):
     if (fmt == '2160'):
         fmt = '4k'
 
-    #rkey = Regex(r'var\s*?stream\_key\s*?\=\s*?[\'\"]([^\'\"\;]+)[\'\"]').search(page)
-    #rid = Regex(r'var\s*?stream\_id\s*?\=\s*?[\'\"]([^\'\"\;]+)[\'\"]').search(page)
     videoURL = Regex(r'var\s*?stream\_url\_{}\s*?\=\s*?[\'\"]([^\'\"\;]+)[\'\"]'.format(fmt)).search(page)
 
     if videoURL:
         Log.Debug('* PlayVideo URL          = {}'.format(videoURL.group(1)))
         return Redirect(videoURL.group(1))
-
-    #if rkey and rid:
-        #video_url = 'http://spankbang.com/_{}/{}/title/{}__mp4'.format(rid.group(1), rkey.group(1), fmt)
-        #Log.Debug('* PlayVideo URL          = {}'.format(video_url))
-        #return Redirect(video_url)
 
     raise Ex.MediaNotAvailable
