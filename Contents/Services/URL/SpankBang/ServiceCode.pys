@@ -52,8 +52,8 @@ def MediaObjectsForURL(url):
 
     fmt_list = list()
     mo = list()
-    bit_dict = {'super': 1800, 'high': 1200, 'medium': 750, 'low': 120}
-    res_dict = {'super': '1080p', 'high': '720p', 'medium': '480p', 'low': '240p'}
+    bit_dict = {'4k': 3000, '1080p': 1800, '720p': 1200, '480p': 750, '320p': 450, '240p': 120}
+    res_dict = {'4k': '4k', '1080p': '1080p', '720p': '720p', '480p': '480p', '320p': '320p', '240p': '240p'}
 
     for fmt_text in html.xpath('//ul/li[text()="Quality:"]/following-sibling::li[starts-with(@class, "q_")]/@class'):
         fmt_list.append(fmt_text.replace('q_', '').strip())
@@ -64,7 +64,7 @@ def MediaObjectsForURL(url):
     for fmt in fmt_list:
         mo.append(MediaObject(
             parts=[PartObject(key=Callback(PlayVideo, url=url, fmt=res_dict[fmt]))],
-            video_resolution=res_dict[fmt][:-1],
+            video_resolution=res_dict[fmt][:-1] if res_dict[fmt] != '4k' else '2160',
             bitrate=bit_dict[fmt],
             container=Container.MP4,
             video_codec=VideoCodec.H264,
@@ -81,12 +81,20 @@ def PlayVideo(url, fmt, **kwargs):
 
     page = HTTP.Request(url).content
 
-    rkey = Regex(r'var\s*?stream\_key\s*?\=\s*?[\'\"]([^\'\"\;]+)[\'\"]').search(page)
-    rid = Regex(r'var\s*?stream\_id\s*?\=\s*?[\'\"]([^\'\"\;]+)[\'\"]').search(page)
+    if (fmt == '2160'):
+        fmt = '4k'
 
-    if rkey and rid:
-        video_url = 'http://spankbang.com/_{}/{}/title/{}__mp4'.format(rid.group(1), rkey.group(1), fmt)
-        Log.Debug('* PlayVideo URL          = {}'.format(video_url))
-        return Redirect(video_url)
+    #rkey = Regex(r'var\s*?stream\_key\s*?\=\s*?[\'\"]([^\'\"\;]+)[\'\"]').search(page)
+    #rid = Regex(r'var\s*?stream\_id\s*?\=\s*?[\'\"]([^\'\"\;]+)[\'\"]').search(page)
+    videoURL = Regex(r'var\s*?stream\_url\_{}\s*?\=\s*?[\'\"]([^\'\"\;]+)[\'\"]'.format(fmt)).search(page)
+
+    if videoURL:
+        Log.Debug('* PlayVideo URL          = {}'.format(videoURL.group(1)))
+        return Redirect(videoURL.group(1))
+
+    #if rkey and rid:
+        #video_url = 'http://spankbang.com/_{}/{}/title/{}__mp4'.format(rid.group(1), rkey.group(1), fmt)
+        #Log.Debug('* PlayVideo URL          = {}'.format(video_url))
+        #return Redirect(video_url)
 
     raise Ex.MediaNotAvailable
