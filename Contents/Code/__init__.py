@@ -586,7 +586,7 @@ def VideoPage(video_info):
             key=Callback(SimilarVideos, title='Similar Videos', info=info),
             title='Similar Videos', thumb=info[0]['thumb']))
 
-    pstar_list = html.xpath('//a[contains(@href, "/pornstar/")]')
+    pstar_list = html.xpath('//div[@class="ent"]/a[contains(@href, "/pornstar/")]')
     if pstar_list:
         plstar = []
         for ps in pstar_list:
