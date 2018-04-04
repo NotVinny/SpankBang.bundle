@@ -648,7 +648,7 @@ def PhotoBin(title, thumb, url):
 
     oc = ObjectContainer(title2=title)
     html = HTML.ElementFromURL(url)
-    for img in html.xpath('//figure[@class="thumbnails"]/img'):
+    for img in html.xpath('//figure[@class="thumbnails"]/div/img'):
         src = img.get('src')
         title = img.get('title')
         oc.add(CreatePhotoObject(
