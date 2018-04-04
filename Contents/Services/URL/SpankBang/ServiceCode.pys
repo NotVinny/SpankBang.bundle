@@ -38,7 +38,7 @@ def MetadataObjectForURL(url):
         duration=duration,
         genres=genres,
         content_rating='X',
-        thumb=thumb,
+        thumb=thumb if thumb.startswith('http') else ('https:' + thumb),
         art=art,
         source_title='SpankBang'
         )
