@@ -561,7 +561,7 @@ def VideoPage(video_info):
             ))
 
 
-    similar_node = html.xpath('//div[@class="video-similar video-rotate"]')
+    similar_node = html.xpath('//div[@class="similar"]/div[@class="video-list video-rotate"]')
     if similar_node:
         info = []
         for node in similar_node[0].xpath('./div[@class="video-item"]'):
@@ -571,7 +571,7 @@ def VideoPage(video_info):
             vid = vhref.split('/')[-1]
             thumb = 'http:' + a_node.xpath('./img/@src')[0]
             name = a_node.xpath('./img/@alt')[0].strip()
-            duration = 1000 * int(a_node.xpath('./span[@class="len"]/text()')[0].strip())
+            duration = 1000 * int(a_node.xpath('./span[@class="i-len"]/text()')[0].strip())
 
             hd_node = node.xpath('./span[@class="i-hd"]')
             if hd_node:
