@@ -142,7 +142,7 @@ def CategoryList(title):
 def PornstarsList(href, page):
     oc = ObjectContainer(title2='Pornstars')
     html = HTML.ElementFromURL(BASE_URL + href)
-    for a in html.xpath('//a[contains(@href, "/pornstar/")]'):
+    for a in html.xpath('//div[@id="pornstars"]//a[@class="image"][contains(@href, "/pornstar/")]'):
         if a.xpath('./img'):
             title = a.xpath('./img/@title')[0].strip()
             thumb = a.xpath('./img/@src')[0]
