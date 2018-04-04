@@ -126,7 +126,7 @@ def CategoryList(title):
     url = BASE_URL + '/categories'
 
     html = HTML.ElementFromURL(url)
-    for genre_node in html.xpath('//h1[text()="All porn categories"]/following-sibling::div[@class="categories"]/a'):
+    for genre_node in html.xpath('//div[@class="categories"]/a'):
         chref = genre_node.get('href').split('?')[0]
         img = genre_node.xpath('./img')[0].get('src')
         name = genre_node.xpath('./span/text()')[0]
