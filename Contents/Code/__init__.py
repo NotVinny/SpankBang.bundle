@@ -483,7 +483,7 @@ def DirectoryList(title, href, page):
 
     oc = ObjectContainer(title2=main_title)
 
-    for node in html.xpath('//div[@class="results results_search"]/div[@class="video-list video-rotate"]/div[@class="video-item"]'):
+    for node in html.xpath('//div[@class="results results_search" or @class="right"]/div[@class="video-list video-rotate"]/div[@class="video-item"]'):
         a_node = node.xpath('./a')[0]
         vhref = a_node.get('href')
         vurl = BASE_URL + vhref
