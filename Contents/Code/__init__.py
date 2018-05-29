@@ -487,7 +487,7 @@ def DirectoryList(title, href, page):
         a_node = node.xpath('./a')[0]
         vhref = a_node.get('href')
         vurl = BASE_URL + vhref
-        thumb = 'http:' + a_node.xpath('./img/@src')[0]
+        thumb = 'http:' + a_node.xpath('./img/@data-src')[0]
         name = a_node.xpath('./img/@alt')[0].strip()
         hd_node = a_node.xpath('./span[@class="i-hd"]')
         if hd_node:
@@ -569,7 +569,7 @@ def VideoPage(video_info):
             vhref = a_node.get('href')
             vurl = BASE_URL + vhref
             vid = vhref.split('/')[-1]
-            thumb = 'http:' + a_node.xpath('./img/@src')[0]
+            thumb = 'http:' + a_node.xpath('./img/@data-src')[0]
             name = a_node.xpath('./img/@alt')[0].strip()
             duration = 1000 * int(a_node.xpath('./span[@class="i-len"]/text()')[0].strip())
 
